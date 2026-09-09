@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">LuxRamp</string>
+    <string name="brand_tagline">Brightness that keeps up with the room.</string>
 
     <string name="master_title">Ambient brightness</string>
     <string name="master_status_off">Off — HyperOS is controlling the screen</string>
