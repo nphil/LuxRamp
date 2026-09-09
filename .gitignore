@@ -1,8 +1,9 @@
-build/
+*.iml
 .gradle/
+.idea/
+build/
 local.properties
+.kotlin/
+*.jks
 *.apk
 *.apk.sha256
-.idea/
-.kotlin/
-.DS_Store

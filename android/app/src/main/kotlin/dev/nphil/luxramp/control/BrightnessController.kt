@@ -381,13 +381,16 @@ class BrightnessController(
      * re-derive the offset, so the whole curve moves with them instead of us fighting back.
      */
     private fun onSettingChanged(value: Int) {
+        // The observer reads the provider, so this is the truth about what it holds - record it
+        // before any filter can drop the callback, or a change we ignore would leave us believing
+        // a stale value and skipping the very write that would correct the screen.
+        lastWrittenSetting = value
         if (isSelfWrite(value)) return
         if (SystemClock.elapsedRealtime() - lastSelfWriteAt < SELF_WRITE_QUIET_MILLIS) return
+        // Suppresses the repeat callbacks one change can produce, not a genuine return to an
+        // earlier value: every write of ours clears this again.
         if (value == lastObservedUserValue) return
         lastObservedUserValue = value
-        // The provider now holds their number, not ours; remembering it (without claiming it as a
-        // self write) keeps us from writing the same int straight back at them.
-        lastWrittenSetting = value
 
         val desired = Brightness.fromSetting(value).coerceIn(Brightness.MIN, 1f)
         stopTicker()
@@ -499,6 +502,9 @@ class BrightnessController(
         selfWriteCursor = (selfWriteCursor + 1) % selfWrites.size
         lastSelfWriteAt = SystemClock.elapsedRealtime()
         lastWrittenSetting = value
+        // We have moved the brightness since, so the user dragging back to a value they used
+        // earlier is a new instruction, not a repeat callback.
+        lastObservedUserValue = -1
     }
 
     private fun isSelfWrite(value: Int): Boolean = selfWrites.any { it == value }

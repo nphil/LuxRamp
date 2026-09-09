@@ -73,8 +73,18 @@ class TemporaryBrightnessWriter(private val displayId: Int = 0) : BrightnessWrit
     private val binder: IBinder
 
     init {
-        // The reflective field read below touches a blocklisted class on some ROMs.
+        // The reflective reads below touch a blocklisted class on some ROMs.
         exemptDisplayApis()
+        // A ROM that changed the parameters would still accept our parcel and report success while
+        // the panel never moves, so refuse anything but (int displayId, float brightness) up front.
+        val method = Class.forName("android.hardware.display.IDisplayManager")
+            .declaredMethods
+            .firstOrNull { it.name == "setTemporaryBrightness" }
+            ?: throw NoSuchMethodException("IDisplayManager.setTemporaryBrightness")
+        val params = method.parameterTypes
+        check(params.size == 2 && params[0] == Int::class.javaPrimitiveType && params[1] == Float::class.javaPrimitiveType) {
+            "setTemporaryBrightness has signature ${params.joinToString { it.simpleName }}"
+        }
         val code = Class.forName("android.hardware.display.IDisplayManager\$Stub")
             .getDeclaredField("TRANSACTION_setTemporaryBrightness")
             .apply { isAccessible = true }
