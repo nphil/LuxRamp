@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Copy for the floating mini window. Every line here competes for 236dp, so it is
+         deliberately shorter than the equivalent wording in the main app. -->
+
+    <string name="mini_percent">%1$d%%</string>
+    <string name="mini_offset_value">%1$.2f</string>
+    <string name="mini_offset_caption">Brighter or dimmer than stock</string>
+
+    <string name="mini_screen_off">Screen off</string>
+
+    <string name="mini_handle">Move this window</string>
+    <string name="mini_open_app">Open LuxRamp</string>
+    <string name="mini_auto_on">Automatic control is on, tap to switch it off</string>
+    <string name="mini_auto_off">Automatic control is off, tap to switch it on</string>
+    <string name="mini_collapse">Shrink to a pill</string>
+    <string name="mini_expand">Show the controls</string>
+    <string name="mini_close">Close the floating window</string>
+
+    <string name="mini_brightness_slider">Screen brightness</string>
+    <string name="mini_offset_slider">Ramp offset</string>
+
+    <string name="mini_writer_privileged">Writing brightness instantly</string>
+    <string name="mini_writer_fallback">Falling back to the system ramp</string>
+
+</resources>

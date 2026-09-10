@@ -5,6 +5,7 @@ composeBom = "2026.08.00"
 lifecycle = "2.11.0"
 activity = "1.13.0"
 core = "1.19.0"
+splashscreen = "1.2.0"
 datastore = "1.2.1"
 coroutines = "1.11.0"
 shizuku = "13.1.5"
@@ -22,6 +23,7 @@ lifecycle-runtime-compose = { module = "androidx.lifecycle:lifecycle-runtime-com
 lifecycle-service = { module = "androidx.lifecycle:lifecycle-service", version.ref = "lifecycle" }
 activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity" }
 core-ktx = { module = "androidx.core:core-ktx", version.ref = "core" }
+core-splashscreen = { module = "androidx.core:core-splashscreen", version.ref = "splashscreen" }
 datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "coroutines" }
 shizuku-api = { module = "dev.rikka.shizuku:api", version.ref = "shizuku" }

@@ -8,10 +8,11 @@ import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 
 /**
- * Brings the service back after a reboot, but only if the user left LuxRamp switched on.
+ * Brings the service back after a reboot, for whichever duty the user left switched on: following
+ * the light sensor, the floating window, or both.
  *
- * The enabled flag lives in DataStore, so the answer needs a suspend read: [goAsync] holds the
- * broadcast open while it happens, and the pending result is finished on every path.
+ * Both flags live in DataStore, so the answer needs a suspend read: [goAsync] holds the broadcast
+ * open while it happens, and the pending result is finished on every path.
  */
 class BootReceiver : BroadcastReceiver() {
 
@@ -22,8 +23,8 @@ class BootReceiver : BroadcastReceiver() {
         val pending = goAsync()
         container.appScope.launch {
             try {
-                val enabled = runCatching { container.prefs.prefs.first().enabled }.getOrDefault(false)
-                if (enabled) BrightnessService.start(app)
+                val prefs = runCatching { container.prefs.prefs.first() }.getOrNull()
+                if (prefs != null && (prefs.enabled || prefs.miniEnabled)) BrightnessService.start(app)
             } finally {
                 pending.finish()
             }

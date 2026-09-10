@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="service_channel_name">Background service</string>
+    <string name="service_channel_description">Shown while LuxRamp is following the light sensor or holding the floating window open</string>
+
+    <string name="service_title_control">LuxRamp active</string>
+    <string name="service_title_window">LuxRamp floating window</string>
+
+    <string name="service_status_starting">Starting</string>
+    <string name="service_status_screen_off">Screen off, waiting for light</string>
+    <!-- Brightness percent, ambient lux, and which writer is putting the value on the panel. -->
+    <string name="service_status_live">%1$d%% at %2$d lx, %3$s</string>
+    <!-- Joins the control status and the floating window status into one line. -->
+    <string name="service_status_join">%1$s, %2$s</string>
+    <string name="service_status_window_fragment">floating window open</string>
+    <string name="service_status_window_blocked_fragment">floating window needs permission</string>
+    <string name="service_status_window_only">Floating window open, automatic control off</string>
+    <string name="service_status_window_blocked">Floating window needs the draw over other apps permission</string>
+
+    <string name="service_action_stop">Stop</string>
+    <string name="service_action_show_window">Show window</string>
+    <string name="service_action_hide_window">Hide window</string>
+</resources>

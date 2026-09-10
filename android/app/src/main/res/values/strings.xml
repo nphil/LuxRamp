@@ -1,58 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!--
+      The app shell's copy, and the only file that declares the shared ids.
+      Every other slice ships res/values/strings_<slice>.xml under its own
+      prefix, so a merge can never collide on a duplicate name.
+    -->
     <string name="app_name">LuxRamp</string>
     <string name="brand_tagline">Brightness that keeps up with the room.</string>
 
-    <string name="master_title">Ambient brightness</string>
-    <string name="master_status_off">Off — HyperOS is controlling the screen</string>
-    <string name="master_status_screen_off">Screen off — sensor paused</string>
-    <string name="master_status_writer">Running · %1$s</string>
+    <string name="home_settings">Settings</string>
 
-    <string name="setup_title">Setup</string>
-    <string name="setup_shizuku">Shizuku</string>
-    <string name="setup_shizuku_not_installed">Not installed. Without it LuxRamp can only ask the system to ramp, which is the slow path this app exists to replace.</string>
-    <string name="setup_shizuku_not_running">Installed but not running. Start Shizuku, then recheck.</string>
-    <string name="setup_shizuku_permission_needed">Waiting for you to authorise LuxRamp.</string>
-    <string name="setup_shizuku_ready">Ready.</string>
-    <string name="setup_write_settings">Modify system settings</string>
-    <string name="setup_write_settings_detail">Lets LuxRamp save the brightness it settles on, so the system slider agrees with the screen.</string>
-    <string name="setup_notifications">Notifications</string>
-    <string name="setup_notifications_detail">Android requires a notification for the background service. You can hide it again under HyperOS extras.</string>
-    <string name="setup_battery">Unrestricted battery</string>
-    <string name="setup_battery_detail">Stops HyperOS freezing the service while the screen is off.</string>
+    <!-- The live pill in the top bar: four words for four states of the loop. -->
+    <string name="status_running">Running</string>
+    <string name="status_system_writer">System writer</string>
+    <string name="status_screen_off">Screen off</string>
+    <string name="status_off">Off</string>
 
-    <string name="extras_title">HyperOS extras</string>
-    <string name="setup_autostart">Autostart</string>
-    <string name="setup_autostart_detail">Allow LuxRamp in the Security app so it comes back after a reboot. Nothing here can be read back, so this row never ticks itself off.</string>
-    <string name="setup_hide_notification">Hide the notification</string>
-    <string name="setup_hide_notification_detail">Turn this channel off. The service keeps running; only the notification goes away.</string>
+    <string name="master_title">Automatic brightness</string>
+    <string name="master_state_off">Off, so the system is deciding the brightness.</string>
+    <string name="master_state_screen_off">Screen off, so the light sensor is parked.</string>
+    <string name="master_state_running_instant">Following the room, ramping instantly.</string>
+    <string name="master_state_running_system">Following the room, but the system is doing the ramping.</string>
+    <string name="master_explain">On, LuxRamp reads the light sensor itself and moves the screen at a speed you choose, instead of waiting for the system to notice the room changed.</string>
+    <string name="master_slow_writer">Shizuku is not connected, so brightness goes through the system and the system ramps it. Everything still works, it is just no longer instant.</string>
+    <string name="master_slow_writer_action">Fix this</string>
 
-    <string name="action_grant">Grant</string>
-    <string name="action_recheck">Recheck</string>
-    <string name="action_open">Open</string>
-    <string name="action_show">Show</string>
-    <string name="action_hide">Hide</string>
+    <string name="tune_title">Tuning</string>
+    <string name="tune_reset">Reset to defaults</string>
+    <string name="tune_group_speed">Speed</string>
+    <string name="tune_group_speed_detail">How long the screen takes to move, once LuxRamp has decided to move it.</string>
+    <string name="tune_group_steadiness">Steadiness</string>
+    <string name="tune_group_steadiness_detail">How readily LuxRamp believes the light in the room really changed.</string>
+    <string name="tune_group_preference">Preference</string>
+    <string name="tune_group_preference_detail">Where the whole curve sits, for eyes that are not average.</string>
+    <string name="tune_ramp_up">Ramp up</string>
+    <string name="tune_ramp_up_explain">How long the screen takes to reach a brighter level. Shorter feels instant, longer feels calmer.</string>
+    <string name="tune_ramp_down">Ramp down</string>
+    <string name="tune_ramp_down_explain">How long it takes to dim. Slower is usually better, because dimming you notice is dimming that annoys.</string>
+    <string name="tune_tau_up">Smoothing up</string>
+    <string name="tune_tau_up_explain">How quickly LuxRamp believes the room got brighter. Lower reacts sooner but can chase a passing light.</string>
+    <string name="tune_tau_down">Smoothing down</string>
+    <string name="tune_tau_down_explain">How quickly it believes the room got darker. Higher keeps a shadow crossing the sensor from dimming the screen.</string>
+    <string name="tune_offset">Offset</string>
+    <string name="tune_offset_explain">Your overall preference. Higher is brighter everywhere, and it lifts dim rooms the most.</string>
 
-    <string name="live_title">Live</string>
-    <string name="live_lux_raw">Lux, raw</string>
-    <string name="live_lux_filtered">Lux, filtered</string>
-    <string name="live_target">Target</string>
-    <string name="live_current">Current</string>
-    <string name="live_legend_lux">Lux (log)</string>
-    <string name="live_legend_brightness">Brightness</string>
-    <string name="live_waiting">Waiting for the light sensor.</string>
-
-    <string name="tuning_title">Tuning</string>
-    <string name="tuning_ramp_up">Ramp up</string>
-    <string name="tuning_ramp_down">Ramp down</string>
-    <string name="tuning_tau_up">Smoothing up</string>
-    <string name="tuning_tau_down">Smoothing down</string>
-    <string name="tuning_offset">Offset</string>
-    <string name="tuning_curve_caption">The stock lux curve with your offset applied. The dashed line is the brightest step before the sunlight boost.</string>
-
-    <string name="value_unknown">—</string>
-    <string name="value_lux">%1$.0f lx</string>
-    <string name="value_percent">%1$.0f %%</string>
     <string name="value_millis">%1$d ms</string>
-    <string name="value_offset">%1$.2f</string>
+    <string name="value_offset">%1$+.2f</string>
 </resources>

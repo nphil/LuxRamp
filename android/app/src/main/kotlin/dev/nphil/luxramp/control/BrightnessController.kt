@@ -73,6 +73,13 @@ class BrightnessController(
 
     private val events = Channel<Event>(Channel.UNLIMITED)
 
+    /**
+     * Brightness the user asked for while the loop is stopped. Conflated because only the newest
+     * value matters: a drag then becomes as many provider round trips as one thread can deliver
+     * rather than one per frame, and they still arrive in order.
+     */
+    private val manualWrites = Channel<Float>(Channel.CONFLATED)
+
     private val _telemetry = MutableStateFlow(Telemetry())
     val telemetry: StateFlow<Telemetry> = _telemetry.asStateFlow()
 
@@ -123,6 +130,7 @@ class BrightnessController(
     private var shizukuJob: Job? = null
     private var tickerJob: Job? = null
     private var commitJob: Job? = null
+    private var manualJob: Job? = null
 
     private val sensorListener = object : SensorEventListener {
         override fun onSensorChanged(event: SensorEvent) {
@@ -266,6 +274,27 @@ class BrightnessController(
         _telemetry.value = Telemetry(writerLabel = writerLabel, screenOn = screenOn)
     }
 
+    /**
+     * Put [linear] on the screen because the user asked for it directly, from the floating window
+     * rather than from the system slider.
+     *
+     * The two paths are different jobs, not one job with a flag. Running, this is the same gesture
+     * [onSettingChanged] handles, so it joins the queue and gets the same treatment: adopt the
+     * value, re-solve the offset, one writer. Stopped, there is no consumer to receive an event and
+     * no curve being followed, so it is a plain manual write and nothing else: no sensor, no
+     * brightness-mode change, no offset to derive.
+     */
+    fun setUserBrightness(linear: Float) {
+        if (linear.isNaN()) return
+        val value = linear.coerceIn(Brightness.MIN, 1f)
+        if (running) {
+            events.trySend(Event.UserBrightness(value))
+            return
+        }
+        ensureManualWriter()
+        manualWrites.trySend(value)
+    }
+
     private fun handle(event: Event) {
         // An event already in flight when stop() ran must not resurrect any of the state above.
         if (!running) return
@@ -275,6 +304,7 @@ class BrightnessController(
             is Event.Preferences -> onPreferences(event.prefs)
             is Event.Shizuku -> onShizuku(event.ready)
             is Event.SettingChanged -> onSettingChanged(event.value)
+            is Event.UserBrightness -> onUserBrightness(event.linear)
             is Event.Tick -> onTick()
             is Event.Commit -> commit()
         }
@@ -403,6 +433,29 @@ class BrightnessController(
         scope.launch { runCatching { prefs.setOffset(derived) } }
     }
 
+    /**
+     * The floating window's slider is the system slider by another route: same adoption, same
+     * offset solve, so the whole curve moves with the user rather than the next lux sample pulling
+     * the screen back.
+     *
+     * Nothing to filter out here the way [onSettingChanged] has to, because the gesture is ours:
+     * the value goes to the panel at once, and [applyBrightness] (or [commit], when the privileged
+     * writer bypassed the provider) records it in the self-write ring, so the observer does not
+     * read our own write back as a second, competing gesture.
+     */
+    private fun onUserBrightness(linear: Float) {
+        stopTicker()
+        ramper.prime(linear)
+        if (!filter.value.isNaN()) lastActedLux = filter.value
+        applyBrightness(linear, force = true)
+        scheduleCommit()
+        publish()
+
+        val derived = offsetFor(filter.value, linear) ?: return
+        if (abs(derived - settings.offset) <= OFFSET_EPSILON) return
+        scope.launch { runCatching { prefs.setOffset(derived) } }
+    }
+
     private fun retarget(target: Float, nowMillis: Long) {
         if (abs(target - ramper.target) <= TARGET_EPSILON && !ramper.current.isNaN()) return
         ramper.retarget(target, nowMillis)
@@ -524,6 +577,27 @@ class BrightnessController(
         tickerJob = null
     }
 
+    /**
+     * Drains [manualWrites]. Started on first use and then left alone: it touches no controller
+     * state, so it costs one suspended coroutine and does not care whether the loop is running.
+     */
+    @Synchronized
+    private fun ensureManualWriter() {
+        if (manualJob?.isActive == true) return
+        manualJob = scope.launch(Dispatchers.IO) {
+            for (linear in manualWrites) {
+                if (!Settings.System.canWrite(appContext)) continue
+                runCatching {
+                    Settings.System.putInt(
+                        resolver,
+                        Settings.System.SCREEN_BRIGHTNESS,
+                        Brightness.toSetting(linear),
+                    )
+                }
+            }
+        }
+    }
+
     private fun registerSensor() {
         if (sensorRegistered) return
         val manager = sensorManager ?: return
@@ -604,6 +678,7 @@ class BrightnessController(
         data class Preferences(val prefs: Prefs) : Event
         data class Shizuku(val ready: Boolean) : Event
         data class SettingChanged(val value: Int) : Event
+        data class UserBrightness(val linear: Float) : Event
         data object Tick : Event
         data object Commit : Event
     }

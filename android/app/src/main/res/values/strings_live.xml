@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="live_title">Live</string>
+    <string name="live_subtitle">What the loop is seeing and doing</string>
+
+    <string name="live_panel_label">Panel now</string>
+    <string name="live_ambient_label">Ambient</string>
+    <string name="live_value_percent">%1$d%%</string>
+    <string name="live_value_lux">%1$d lx</string>
+    <string name="live_value_lux_fine">%1$.1f lx</string>
+    <string name="live_target_caption">Heading for %1$d%%</string>
+
+    <string name="live_state_ramping">Ramping</string>
+    <string name="live_state_settled">Settled</string>
+    <string name="live_state_simulated">Simulated</string>
+
+    <string name="live_legend_lux">Ambient light</string>
+    <string name="live_legend_brightness">Panel brightness</string>
+
+    <string name="live_preview">Preview</string>
+    <string name="live_preview_start">Start preview</string>
+    <string name="live_preview_stop">Stop preview</string>
+    <string name="live_preview_panel">Simulated panel</string>
+    <string name="live_preview_explain">A replay of your current tuning against a walk from a dim room into direct sun and back. Nothing here touches the screen.</string>
+
+    <string name="live_waiting">Waiting for the first readings.</string>
+    <string name="live_screen_off">The screen is off, so there is nothing to measure.</string>
+</resources>

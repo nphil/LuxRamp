@@ -52,24 +52,44 @@ Or download the APK from the [latest release](https://github.com/nphil/LuxRamp/r
 
 ## Setup
 
-Everything below is a row in the app's setup card, and every row disappears once it is satisfied.
+The first launch is one screen that asks for everything at once, with a plain sentence under each row
+saying what it buys you. **Set up everything** walks the outstanding items one at a time and stops on
+its own when the list runs out or you decline something.
 
-1. **Shizuku** — install [Shizuku](https://shizuku.rikka.app/) (or Sui on a rooted device) and start it,
-   then tap **Grant** in LuxRamp. This is what makes the ramp instant; without it LuxRamp still works, but
-   the system does the ramping.
-2. **Modify system settings** — needed to commit the settled brightness back to
-   `Settings.System.SCREEN_BRIGHTNESS`, and to notice when you move the slider yourself.
-3. **Notifications** — Android requires a notification for the foreground service. Grant it; you can hide
-   the notification afterwards (step 5).
-4. **Unrestricted battery**, and **Autostart** under *HyperOS extras* — HyperOS will otherwise freeze the
-   service with the screen off, and will not bring it back after a reboot. Autostart lives in the Security
-   app and cannot be read back, so LuxRamp can only offer to open it.
-5. **Hide the notification** — under *HyperOS extras*, opens the `luxramp_service` channel's settings.
-   Turning the channel off hides the notification; the service keeps running.
+1. **Modify system settings** (required) lets LuxRamp save the brightness it settles on, so the system
+   slider agrees with the screen, and notice when you move that slider yourself.
+2. **Notifications** (required) because Android will not run a background service without one. You can
+   hide it again afterwards under HyperOS extras and the service keeps going.
+3. **Unrestricted battery** (required on HyperOS) or the service is frozen with the screen off.
+4. **Shizuku** (optional, but the reason the app exists) makes the writes instant. Install
+   [Shizuku](https://shizuku.rikka.app/), or Sui on a rooted device, start it, then authorise LuxRamp.
+   Without it LuxRamp still works, but the system performs the ramp at the slow rates above.
+5. **Display over other apps** (optional) is only needed for the floating panel.
 
-Then flip the master switch. The **Live** card shows raw and filtered lux against target and current
-brightness, with the last two minutes as a trace. The **Tuning** card has the five numbers the loop is
-made of — ramp up/down, smoothing up/down, and the offset — plus a preview of the curve they land on.
+Two HyperOS knobs cannot be read back, so they live behind a disclosure in Settings rather than
+pretending to be checklist rows that never tick: **Autostart** in the Security app, which is what brings
+the service back after a reboot, and **hide the notification**, which opens the `luxramp_service`
+channel's own settings.
+
+## The app
+
+- **Master card**: the switch, and one line saying what is actually happening. If Shizuku is not
+  connected it says so here, because that is the one degradation worth putting on the main screen.
+- **Live**: the panel's brightness and the room's light as they happen, a gauge showing where the ramp
+  is against where it is heading, and the last two minutes as a trace. The trace advances on the frame
+  clock rather than on the 4 Hz sample rate, so it glides instead of stepping.
+- **Preview**: replays your current tuning against a walk from a dim room into direct sun and back,
+  looping with a beat between runs, including a swatch that lights and dims the way the panel would.
+  Nothing in preview touches the screen.
+- **Your curve versus stock**: the stock HyperOS curve and yours on one chart, with the band between
+  them shaded. Drag across it to read any light level, drag up or down on it to brighten or dim your
+  curve directly.
+- **Tuning**: the five numbers the loop is made of, each with a sentence saying which way to drag it.
+- **Floating panel**: a small always on top window with a brightness slider, a button that turns the
+  automatic control off, and the ramp offset. It fades to a low opacity a few seconds after you stop
+  touching it, collapses to a pill, and remembers where you parked it. Turn it on in Settings.
+- **Settings**: theme mode, Material You, and twenty palettes shared with the HomeLabber app, plus the
+  floating panel options, the deadband, and every permission again so a grant can be revisited.
 
 ## Development
 

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- First run -->
+    <string name="setup_intro">LuxRamp watches the room with its own light sensor loop, so the screen moves when the light does instead of catching up ten seconds later.</string>
+    <string name="setup_permissions_title">Permissions</string>
+    <string name="setup_permissions_subtitle">Everything LuxRamp needs, asked for once, here.</string>
+    <string name="setup_run_all">Set up everything</string>
+    <string name="setup_run_progress">Step %1$d of %2$d</string>
+    <string name="setup_run_opening">Opening %1$s.</string>
+    <string name="setup_run_waiting">Still waiting on %1$s. Grant it there, or stop the run.</string>
+    <string name="setup_run_stop">Stop</string>
+    <string name="setup_continue">Continue</string>
+    <string name="setup_skip">Skip for now</string>
+    <string name="setup_footer_ready">Everything required is granted. LuxRamp is ready to run.</string>
+    <string name="setup_footer_blocked">Continue unlocks once the required items are granted. Skipping is fine too: LuxRamp will run in a reduced form and you can grant the rest later in Settings.</string>
+
+    <!-- Grant state -->
+    <string name="setup_state_granted">Granted</string>
+    <string name="setup_state_needed">Needed</string>
+    <string name="setup_state_optional">Optional</string>
+
+    <!-- Actions -->
+    <string name="setup_action_open">Open</string>
+    <string name="setup_action_allow">Allow</string>
+    <string name="setup_action_install">Install</string>
+    <string name="setup_action_start">Start</string>
+    <string name="setup_action_authorise">Authorise</string>
+    <string name="setup_action_show">Show</string>
+    <string name="setup_action_hide">Hide</string>
+
+    <!-- The requestable items -->
+    <string name="setup_item_write_title">Modify system settings</string>
+    <string name="setup_item_write_explain">Lets LuxRamp save the brightness it settles on, so the system slider agrees with the screen, and notice when you move that slider yourself.</string>
+    <string name="setup_item_notifications_title">Notifications</string>
+    <string name="setup_item_notifications_explain">Android will not run a background service without one. You can hide the notification again under HyperOS extras, and the service keeps going.</string>
+    <string name="setup_item_battery_title">Unrestricted battery</string>
+    <string name="setup_item_battery_explain">HyperOS freezes the service once the screen goes off unless LuxRamp is unrestricted, and the ramp freezes with it.</string>
+    <string name="setup_item_shizuku_title">Shizuku</string>
+    <string name="setup_item_shizuku_explain">The reason LuxRamp is fast: with Shizuku it writes brightness straight to the display. Without it the system performs the ramp, which is the slow behaviour this app exists to replace.</string>
+    <string name="setup_item_overlay_title">Display over other apps</string>
+    <string name="setup_item_overlay_explain">Only for the floating panel: a small window that stays on top with brightness, an off switch and the ramp offset.</string>
+
+    <!-- Shizuku is the one item whose next step depends on where it has got to -->
+    <string name="setup_shizuku_missing">Not installed. Install Shizuku, or Sui on a rooted device, then come back.</string>
+    <string name="setup_shizuku_stopped">Installed but not running. Start it from the Shizuku app.</string>
+    <string name="setup_shizuku_unauthorised">Running. It only needs your authorisation for LuxRamp.</string>
+    <string name="setup_shizuku_ready">Authorised. Brightness writes go straight to the display.</string>
+
+    <!-- Settings -->
+    <string name="setup_settings_title">Settings</string>
+    <string name="setup_back">Back</string>
+
+    <string name="setup_appearance_title">Appearance</string>
+    <string name="setup_theme_mode_label">Theme</string>
+    <string name="setup_theme_system">System</string>
+    <string name="setup_theme_light">Light</string>
+    <string name="setup_theme_dark">Dark</string>
+    <string name="setup_theme_mode_explain">Follow the device, or pin LuxRamp to light or dark whatever the system is doing.</string>
+    <string name="setup_material_you">Material You</string>
+    <string name="setup_material_you_explain">Take the colours from your wallpaper. Turn it off to choose one of the palettes instead.</string>
+    <string name="setup_palettes_title">Palette</string>
+    <string name="setup_palettes_explain">Each swatch previews that theme with its own background and its own three accents, in the mode you are in right now.</string>
+
+    <string name="setup_floating_title">Floating controls</string>
+    <string name="setup_mini_enabled">Floating panel</string>
+    <string name="setup_mini_enabled_explain">A small window that stays on top of other apps, with a brightness slider, a switch that turns automatic control off, and the ramp offset.</string>
+    <string name="setup_mini_needs_overlay">Needs permission to display over other apps. Grant it, then switch this on.</string>
+    <string name="setup_mini_fade">Fade when left alone</string>
+    <string name="setup_mini_fade_explain">The panel dims itself once you stop touching it, so it stops competing with whatever is underneath.</string>
+    <string name="setup_mini_delay">Fade after</string>
+    <string name="setup_mini_delay_explain">How long the panel stays fully visible after the last touch.</string>
+    <string name="setup_mini_alpha">Faded opacity</string>
+    <string name="setup_mini_alpha_explain">How visible the panel stays once it has faded. Lower keeps it out of the way, and makes it harder to find again.</string>
+
+    <string name="setup_behaviour_title">Behaviour</string>
+    <string name="setup_deadband">Ignore small changes</string>
+    <string name="setup_deadband_explain">How far the light has to move before LuxRamp reacts. Higher leaves the screen alone through small wobbles in the room, like a page turning under a lamp.</string>
+
+    <string name="setup_permissions_all_set">All set</string>
+    <plurals name="setup_permissions_pending">
+        <item quantity="one">%1$d still needed</item>
+        <item quantity="other">%1$d still needed</item>
+    </plurals>
+
+    <string name="setup_extras_title">HyperOS extras</string>
+    <string name="setup_extras_explain">Two vendor switches that cannot be read back, so neither will ever tick itself off. LuxRamp can only open them for you.</string>
+    <string name="setup_extras_autostart">Autostart</string>
+    <string name="setup_extras_autostart_explain">Allow LuxRamp in the Security app so it comes back after a reboot.</string>
+    <string name="setup_extras_hide_notification">Hide the notification</string>
+    <string name="setup_extras_hide_notification_explain">Turns the service notification channel off. The service keeps running, only the notification goes away.</string>
+
+    <string name="setup_about_title">About</string>
+    <string name="setup_about_version">Version %1$s</string>
+    <string name="setup_about_explain">LuxRamp reads the ambient light sensor itself and drives the panel with a ramp you can see and tune, instead of the fixed, slow one the system runs.</string>
+
+    <!-- Value formats used only by these two screens -->
+    <string name="setup_value_percent">%1$d%%</string>
+    <string name="setup_value_seconds">%1$.1f s</string>
+
+</resources>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Owned by the curve card. Every id here is prefixed curve_ so slices never collide. -->
+<resources>
+    <string name="curve_title">Your curve versus stock</string>
+    <string name="curve_subtitle">How bright the screen goes at each light level</string>
+    <string name="curve_reset">Reset</string>
+
+    <string name="curve_legend_stock">Stock</string>
+    <string name="curve_legend_modified">Yours</string>
+    <string name="curve_offset">Offset %1$s</string>
+
+    <string name="curve_axis_lux_min">0 lx</string>
+    <string name="curve_axis_lux_max">4096 lx</string>
+    <string name="curve_axis_lux_10">10</string>
+    <string name="curve_axis_lux_100">100</string>
+    <string name="curve_axis_lux_1k">1k</string>
+    <string name="curve_axis_normal_top">Normal max</string>
+
+    <string name="curve_readout_lux">%1$s lx</string>
+    <string name="curve_readout_values">stock %1$s%%, yours %2$s%% (%3$s%%)</string>
+
+    <string name="curve_chart_description">Chart of screen brightness against room light, the stock curve against yours</string>
+
+    <string name="curve_explain_offset">The offset is a gamma rather than a shift, so turning it up lifts a dim room a long way and a bright one barely at all. The shaded band is the difference it makes.</string>
+    <string name="curve_explain_drag">Drag across the chart to read any light level, drag up or down on it to brighten or dim your curve.</string>
+</resources>

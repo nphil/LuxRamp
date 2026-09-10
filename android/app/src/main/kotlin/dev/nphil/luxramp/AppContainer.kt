@@ -4,6 +4,7 @@ import android.content.Context
 import dev.nphil.luxramp.control.BrightnessController
 import dev.nphil.luxramp.control.ShizukuGateway
 import dev.nphil.luxramp.data.PreferencesRepository
+import dev.nphil.luxramp.service.MiniWindowHost
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -27,4 +28,10 @@ class AppContainer(context: Context) {
     val appScope = CoroutineScope(SupervisorJob() + Dispatchers.Default)
 
     val controller = BrightnessController(appContext, prefs, gateway, appScope)
+
+    /**
+     * One overlay per process, built on first use: the window is optional, and its WindowManager
+     * plumbing costs nothing until something asks for it. Two hosts would mean two windows.
+     */
+    val miniWindow by lazy { MiniWindowHost(appContext) }
 }

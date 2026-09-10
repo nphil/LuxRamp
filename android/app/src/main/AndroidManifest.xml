@@ -11,6 +11,9 @@
         tools:ignore="ProtectedPermissions" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <!-- Granted by the user through Settings.ACTION_MANAGE_OVERLAY_PERMISSION; the floating
+         window is an overlay on top of whatever app they are actually using. -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="moe.shizuku.manager.permission.API_V23" />
     <!-- Needed to detect whether the Shizuku manager app is installed. -->
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"

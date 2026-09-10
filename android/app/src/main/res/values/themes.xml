@@ -1,9 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <style name="Theme.LuxRamp" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:windowSplashScreenBackground">@color/ic_launcher_background</item>
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+<resources xmlns:tools="http://schemas.android.com/tools">
+
+    <!--
+      The launch theme. It paints the launch window with the brand mark so a
+      cold start never flashes white before Compose attaches, and the activity
+      holds it on screen until the stored preferences have been read, so it is
+      also what covers the first DataStore read.
+
+      The manifest names this style, so the splash theme has to be the one
+      called Theme.LuxRamp and the real window theme is the handoff target
+      rather than the other way round.
+    -->
+    <style name="Theme.LuxRamp" parent="Theme.SplashScreen">
+        <item name="windowSplashScreenBackground">@color/ic_launcher_background</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item>
+        <item name="postSplashScreenTheme">@style/Theme.LuxRampWindow</item>
+    </style>
+
+    <style name="Theme.LuxRampWindow" parent="android:Theme.Material.NoActionBar">
+        <!-- Same colour as the splash, so the handoff itself is invisible. -->
+        <item name="android:windowBackground">@color/ic_launcher_background</item>
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:navigationBarColor">@android:color/transparent</item>
+        <item name="android:windowLayoutInDisplayCutoutMode">shortEdges</item>
+        <!--
+          Compose paints the backdrop gradient edge to edge and the activity
+          picks bar icon contrast from the theme it resolved. A platform scrim
+          would sit on top of that gradient and undo both.
+        -->
+        <item name="android:enforceNavigationBarContrast" tools:targetApi="29">false</item>
+        <item name="android:enforceStatusBarContrast" tools:targetApi="29">false</item>
     </style>
+
 </resources>

@@ -80,6 +80,7 @@ dependencies {
     implementation(libs.lifecycle.service)
     implementation(libs.activity.compose)
     implementation(libs.core.ktx)
+    implementation(libs.core.splashscreen)
     implementation(libs.datastore.preferences)
     implementation(libs.coroutines.android)
     implementation(libs.shizuku.api)
